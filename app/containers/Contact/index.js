@@ -11,7 +11,7 @@ const Home = () => (
             ]}
         />
         <h1>Contact Us</h1>
-        <p>Email: my email address</p>
+        <p>Email: my fake email address</p>
         <p>Phone: (801) 555-1212</p>
     </div>
 );
