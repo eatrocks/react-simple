@@ -7,8 +7,8 @@ import {IndexLink} from 'react-router';
 export default ({links = [], className=""}) => (
     <header className={classNames(style.header, className)}>
         <IndexLink to="/" className={style.brand}>
-            <img className={style.logo} src={logo} alt="My Brand" />
-            <span>My website</span>
+            <img className={style.logo} src={logo} alt="Bruce's Bratwurst" />
+            <span>Bruce's Bratwurst</span>
         </IndexLink>
         <SiteNav className={style.nav} links={links} />
     </header>

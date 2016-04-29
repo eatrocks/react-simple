@@ -6,6 +6,10 @@ const successData = [
     {
         href: '/auto-completes',
         text: 'Demo'
+    },
+    {
+        href: '/contact',
+        text: 'Contact'
     }
 ];
 
