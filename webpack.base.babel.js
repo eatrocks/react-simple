@@ -1,4 +1,5 @@
 import cssnext from 'postcss-cssnext';
+import cssimport from 'postcss-import';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import webpack from 'webpack'
 
@@ -10,7 +11,9 @@ export default {
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract(
                     "style-loader",
-                    "css-loader?minimize&modules&importLoaders=1&localIdentName=[local]-[hash:base64:5]!postcss-loader"
+                    process.env.NODE_ENV==="production"
+                        ? "css-loader?minimize&modules&importLoaders=1&localIdentName=[local]-[hash:base64:5]!postcss-loader"
+                        : "css-loader?modules&importLoaders=1&localIdentName=[local]-[hash:base64:5]!postcss-loader"
                 )
             },
 
@@ -20,8 +23,13 @@ export default {
             },
 
             {
+                test : /\.json$/,
+                loader  : 'json'
+            },
+
+            {
                 test: /\.(png|jpe?g|gif|svg|mp3|mpe?g)$/,
-                loader: "file-loader?name=assets/[name]-[hash:2].[ext]"
+                loader: "file-loader?name=static/assets/[name]-[hash:2].[ext]"
             }
 
         ]
@@ -41,6 +49,7 @@ export default {
     },
 
     postcss : [
+        cssimport({path: `${__dirname}/src/app`}),
         cssnext()
     ]
 };
