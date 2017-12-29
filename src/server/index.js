@@ -1,10 +1,15 @@
+import 'dotenv/config';
+import 'isomorphic-fetch';
 import express from 'express';
 import path from 'path';
 import compression from 'compression';
 import helmet from 'helmet';
+import {api} from './routes';
 
-// this module is built by npm script...
-import reactHandler from './modules/react-server-app';
+
+
+// the reactified route-handler from the `app`
+import reactHandler from '../app/_server.js';
 
 // create express app...
 export const app = express();
@@ -12,7 +17,9 @@ export const app = express();
 // middleware
 app.use(compression());
 app.use(helmet());
-app.use(express.static(path.join(__dirname, '..', 'static'), {index: false}));
+app.use('/static', express.static(path.join(__dirname, 'static')));
+
+app.use('/api', api);
 
 // handle routes via react...
 app.get('*', reactHandler);
@@ -23,6 +30,6 @@ app.use( (err, req, res, next) => { // eslint-disable-line
     console.error(err.status===404?`404 ${req.url}`: err.stack); // eslint-disable-line
 });
 
-var PORT = process.env.PORT || 8080;
+const { PORT } = process.env;
 
 app.listen(PORT, () => console.log('Running on port ' + PORT)); // eslint-disable-line

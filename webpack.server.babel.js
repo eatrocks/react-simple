@@ -1,33 +1,27 @@
 import base from './webpack.base.babel.js';
 import path from 'path';
-
+import nodeExternals from 'webpack-node-externals';
 
 export default {
 
     ...base,
 
-    entry: path.resolve('./app/_server.js'),
+    entry: path.resolve('./src/server/index.js'),
 
     output: {
-        filename: 'index.js',
-        library: 'index.js',
-        libraryTarget: 'commonjs2',
-        path: path.join(__dirname, 'server', 'modules', 'react-server-app')
+        path: path.join(__dirname, 'dist'),
+        filename: "server.js",
+        publicPath: '/static/'
     },
+
+    externals: [ nodeExternals({
+        whitelist: ['normalize.css']
+    })],
 
     target: 'node',
 
-    externals: [
-        'html-minifier',
-        'react-dom',
-        'react',
-        'react-router',
-        'react-redux',
-        'react-helmet'
-    ],
-
     node: {
-        __filename: true,
-        __dirname: true
+        __filename: false,
+        __dirname: false
     }
 }
